@@ -157,8 +157,8 @@ def run(label):
     label.update()
 
     # ----------------------- insert into database ---------------------------
-    mydb = mysql.connector.connect(host="127.0.0.1", user="root", password="sfliang62549",
-                                   database="staging_online_db2")
+    mydb = mysql.connector.connect(host="127.0.0.1", user="????", password="????",
+                                   database="????")
     mycursor = mydb.cursor()
 
     sql = "INSERT INTO psg_file (name, nums, ch1, ch2, ch3, ch4, ch5, ch6, ch7, ch8, ch9, ch10, ch11, ch12, ch13, ch14, ch15, ch16, ch17, ch18, ch19, ch20, answer_file) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
