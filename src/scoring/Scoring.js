@@ -312,9 +312,9 @@ class Scoring extends Component {
 										}
 										window.location.href="#"
 									})
-								  } else {
+								} else {
 									//未繳交
-								  }
+								}
 							}
 						}}
 						logout={() => {
@@ -819,29 +819,34 @@ class Scoring extends Component {
 	}
 	async onShowAnswerChecked(checked) {
 		if (checked) {
-			if (this.answer === null) {
-				// ajax to get answer
-				// let answerResult = await axios.post('/ajax_answer', { psgFileId: this.state.psgFileId })
-				this.setState({
-					enableShowAnswerCheckbox: false
-				})
-				let answerResult = await axios.post('/ajax_answer', { psgFileId: this.state.psgFileId })
-				//console.log(answerResult)
-				if (!answerResult.data.success) {
-					alert(answerResult.data.msg)
-					window.history.go(0)
-					return
+			let confirm_ans = window.confirm("顯示自動判讀將會覆蓋目前的判讀，確定進行嗎?")
+			if (confirm_ans) {
+				if (this.answer === null) {
+					// ajax to get answer
+					this.setState({
+						enableShowAnswerCheckbox: false
+					})
+					let answerResult = await axios.post('/ajax_answer', { psgFileId: this.state.psgFileId })
+					//console.log(answerResult)
+					if (!answerResult.data.success) {
+						alert(answerResult.data.msg)
+						window.history.go(0)
+						return
+					}
+					// 成功將prediction寫入pause，重整網頁
+					window.location.reload();
+					
+					this.setState({
+						enableShowAnswerCheckbox: true,
+						answer: this.answer
+					})
+				} else {
+					this.setState({
+						answer: this.answer
+					})
 				}
-				this.answer = answerResult.data.data
-				this.setState({
-					enableShowAnswerCheckbox: true,
-					answer: this.answer
-				})
-			} else {
-				this.setState({
-					answer: this.answer
-				})
 			}
+			
 		} else {
 			this.setState({
 				answer: null

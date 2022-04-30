@@ -54,7 +54,7 @@ for i in range(epoch):
     stage = data_stage[i].split('\n')[0].split(',')
     
     # 插入資料庫
-    sql = "insert into stage_prediction (psg_file_id, epoch, golden_stage, node_stage, auto_stage, stage_smooth, stage_smooth_reliable) values(%s, %s, %s, %s, %s, %s, %s)"
+    sql = "insert into stage_prediction (psg_file_id, epoch, golden_stage, node, auto_stage, stage_smooth, stage_smooth_reliable) values(%s, %s, %s, %s, %s, %s, %s)"
     val = (psg_file_id, i, stage[0], stage[1], stage[2], stage[3], stage[4])
     mycursor.execute(sql, val)
     mydb.commit()
