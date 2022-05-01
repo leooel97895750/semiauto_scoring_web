@@ -99,10 +99,10 @@ class DataManager {
 				let whichArray = Math.floor(x / samplesInOneEpoch) // 看是第幾個array
 				let whichIndex = x % samplesInOneEpoch // 的第幾個數值
 				if (whichIndex === 0 && whichArray !== 0) {
-					whichArray--
+					whichArray --
 					whichIndex += samplesInOneEpoch
 				}
-				//console.log('whichArray:', whichArray)
+				// console.log(whichArray, whichIndex)
 				return floatArrays[whichArray][whichIndex]
 			}
 			let data = function(x) {

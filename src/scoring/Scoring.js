@@ -320,6 +320,8 @@ class Scoring extends Component {
 						logout={() => {
 							console.log('logout')
 						}}
+						psgFileId={this.state.psgFileId}
+						currentEpoch={this.state.currentEpoch}
 						stateToShow={this.state.stateToShow}
 						editable={this.state.editable}
 						account={this.state.account}
@@ -526,7 +528,7 @@ class Scoring extends Component {
 				this.setState({
 					modeArr: modeArr
 				})
-				console.log(modeArr)
+				//console.log(modeArr)
 			}
 			//console.log(statResult)
 			//console.log(this.eventDataStructure)
@@ -817,40 +819,33 @@ class Scoring extends Component {
 			stateToShow: stateStr
 		})
 	}
-	async onShowAnswerChecked(checked) {
-		if (checked) {
-			let confirm_ans = window.confirm("顯示自動判讀將會覆蓋目前的判讀，確定進行嗎?")
-			if (confirm_ans) {
-				if (this.answer === null) {
-					// ajax to get answer
-					this.setState({
-						enableShowAnswerCheckbox: false
-					})
-					let answerResult = await axios.post('/ajax_answer', { psgFileId: this.state.psgFileId })
-					//console.log(answerResult)
-					if (!answerResult.data.success) {
-						alert(answerResult.data.msg)
-						window.history.go(0)
-						return
-					}
-					// 成功將prediction寫入pause，重整網頁
-					window.location.reload();
-					
-					this.setState({
-						enableShowAnswerCheckbox: true,
-						answer: this.answer
-					})
-				} else {
-					this.setState({
-						answer: this.answer
-					})
+	async onShowAnswerChecked() {
+		let confirm_ans = window.confirm("進行自動判讀將會覆蓋目前的判讀，確定進行嗎?");
+		if (confirm_ans) {
+			if (this.answer === null) {
+				// ajax to get answer
+				this.setState({
+					enableShowAnswerCheckbox: false
+				})
+				let answerResult = await axios.post('/ajax_answer', { psgFileId: this.state.psgFileId });
+				//console.log(answerResult)
+				if (!answerResult.data.success) {
+					alert(answerResult.data.msg)
+					window.history.go(0)
+					return
 				}
+				// 成功將prediction寫入pause，重整網頁
+				window.location.reload();
+				
+				this.setState({
+					enableShowAnswerCheckbox: true,
+					answer: this.answer
+				})
+			} else {
+				this.setState({
+					answer: this.answer
+				})
 			}
-			
-		} else {
-			this.setState({
-				answer: null
-			})
 		}
 	}
 }

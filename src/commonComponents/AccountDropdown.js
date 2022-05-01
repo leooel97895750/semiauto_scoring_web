@@ -25,7 +25,7 @@ function AccountDropdown(props) {
 					}
 				}}}>
 			<Dropdown.Toggle as={CustomToggle} id="account-dropdown">
-				{props.account}
+				{props.account}&nbsp;
 			</Dropdown.Toggle>
 			<Dropdown.Menu>
 				<Dropdown.Item eventKey={'set_pass'} style={{color: 'black'}}>

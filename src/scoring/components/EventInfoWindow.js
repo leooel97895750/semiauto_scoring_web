@@ -163,10 +163,10 @@ class EventInfoWindow extends Component {
 		//console.log(this.props.eventId)
 		let eventInfo = this.props.getEventInfo(this.props.eventId)
 		let eventTypes = this.props.getChannelEvents(eventInfo.channelId)
-		let desat = null
-		if (this.props.showDesat) {
-			desat = <>Desat<br />{this.state.desat}</>
-		}
+		// let desat = null
+		// if (this.props.showDesat) {
+		// 	desat = <>Desat<br />{this.state.desat}</>
+		// }
 
 		// 產生起訖點振幅
 		let amplitude = null;
@@ -248,7 +248,6 @@ class EventInfoWindow extends Component {
 				let endPoint = (this.props.data[i].dataLength-1) * (eventInfo.secondTo - this.props.secondFrom) / (this.props.secondTo - this.props.secondFrom);
 				//console.log(this.props.data[i].dataLength-1,eventInfo.secondFrom,this.props.secondFrom,this.props.secondTo,startPoint, endPoint,startPoint + this.props.data[i].dataLength - 1);
 				let eventAmp = 0;
-				console.log(this.props.data[0].data(Math.round(startPoint)),this.props.data[0].data(Math.round(endPoint)))
 				if(i<=2){
 					eventAmp=this.find_upanddown_v1(startPoint,endPoint,130,isLeftIn,isRightIn,left_page,right_page,i)*100
 					eventAmp=eventAmp.toFixed(2)
@@ -303,26 +302,27 @@ class EventInfoWindow extends Component {
 
 		 	let spo2Amp = 0;
 		 	if(isLeftIn && isRightIn){
-		 		try {spo2Amp = Math.abs(this.props.data[5].data(Math.round(startPoint)) - this.props.data[5].data(Math.round(endPoint))).toFixed(1);}
+		 		try {spo2Amp = (this.props.data[5].data(Math.round(startPoint)) - this.props.data[5].data(Math.round(endPoint))).toFixed(1);}
 		 		catch(error) {console.log(error);}
 		 	}
 		 	// 左界超出
 			else if(isLeftIn === 0 && isRightIn === 1){
-		 		try {spo2Amp = Math.abs(this.props.preData[0][5].data(Math.round(startPoint + this.props.data[5].dataLength-1)) - this.props.data[5].data(Math.round(endPoint))).toFixed(1);}
+		 		try {spo2Amp = (this.props.preData[0][5].data(Math.round(startPoint + this.props.data[5].dataLength-1)) - this.props.data[5].data(Math.round(endPoint))).toFixed(1);}
 		 		catch(error) {console.log(error);}
 		 	}
 		 	// 右界超出
 		 	else if(isLeftIn === 1 && isRightIn === 0){
-		 		try {spo2Amp = Math.abs(this.props.data[5].data(Math.round(startPoint)) - this.props.nextData[0][5].data(Math.round(endPoint - this.props.data[5].dataLength+1))).toFixed(1);}
+		 		try {spo2Amp = (this.props.data[5].data(Math.round(startPoint)) - this.props.nextData[0][5].data(Math.round(endPoint - this.props.data[5].dataLength+1))).toFixed(1);}
 		 		catch(error) {console.log(error);}
 		 	}
 			else if(isLeftIn === 0 && isRightIn === 0){
-				try {spo2Amp = Math.abs(this.props.preData[0][5].data(Math.round(startPoint + this.props.data[5].dataLength-1)) - this.props.nextData[0][5].data(Math.round(endPoint - this.props.data[5].dataLength+1))).toFixed(1);}
+				try {spo2Amp = (this.props.preData[0][5].data(Math.round(startPoint + this.props.data[5].dataLength-1)) - this.props.nextData[0][5].data(Math.round(endPoint - this.props.data[5].dataLength+1))).toFixed(1);}
 		 		catch(error) {console.log(error);}
 			}
 
 
 		 	amplitude = <>
+			 	Desat<br />
 				<span>
 		 			{spo2Amp}%
 				</span>
@@ -349,7 +349,7 @@ class EventInfoWindow extends Component {
 						{formatDuration(eventInfo.secondFrom, eventInfo.secondTo)}<br />
 						
 						{amplitude}
-						{desat}<br />
+						<br />
 						
 					</p>
 					{this.props.editable ? 
@@ -389,16 +389,16 @@ class EventInfoWindow extends Component {
 	async componentDidMount() {
 		//console.log('mount')
 		// if is spo2 try to get desat from server
-		if (!this.props.showDesat) return
-		let eventInfo = this.props.getEventInfo(this.props.eventId)
-		let desatResult = await axios.post('/calculate_spo2', {
-			timeA: parseInt(eventInfo.secondFrom.toFixed(0)),
-			timeB: parseInt(eventInfo.secondTo.toFixed(0)),
-			psgFileId: this.props.psgFileId
-		})
-		this.setState({
-			desat: desatResult.data.spo2.toFixed(1)
-		})
+		// if (!this.props.showDesat) return
+		// let eventInfo = this.props.getEventInfo(this.props.eventId)
+		// let desatResult = await axios.post('/calculate_spo2', {
+		// 	timeA: parseInt(eventInfo.secondFrom.toFixed(0)),
+		// 	timeB: parseInt(eventInfo.secondTo.toFixed(0)),
+		// 	psgFileId: this.props.psgFileId
+		// })
+		// this.setState({
+		// 	desat: desatResult.data.spo2.toFixed(1)
+		// })
 	}
 }
 

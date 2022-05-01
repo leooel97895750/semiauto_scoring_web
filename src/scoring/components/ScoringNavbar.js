@@ -3,6 +3,7 @@ import Navbar from 'react-bootstrap/Navbar'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import AccountDropdown from '../../commonComponents/AccountDropdown'
+import AutoScoringDropdown from '../../commonComponents/AutoScoringDropdown'
 
 function ScoringNavbar(props) {
 	return <Navbar bg="dark" variant="dark">
@@ -23,10 +24,16 @@ function ScoringNavbar(props) {
 			</Form>
 		</> : null}
 		{
-			props.hasStagesBeenLoaded && props.hasAnswer ?
+			props.editable ? <>
+				<div style={{ width: '30px' }} />
+				<Navbar.Text>{props.stateToShow}</Navbar.Text>
+			</> : null
+		}
+		{
+			props.hasStagesBeenLoaded && props.hasAnswer && props.editable ?
 				<>
 					<div style={{ width: '30px' }} />
-					<input
+					{/* <input
 						type="checkbox"
 						id="showAnswer"
 						name="showAnswer"
@@ -34,15 +41,24 @@ function ScoringNavbar(props) {
 						disabled={props.enableShowAnswerCheckbox ? '' : 'disabled'}
 						onChange = {(e) => {
 							props.onShowAnswerChecked(e.target.checked)
-						}} />
-					<Navbar.Text>顯示自動判讀</Navbar.Text>
+						}} /> */}
+					<Navbar.Text>
+						<AutoScoringDropdown 
+							psgFileId={props.psgFileId} 
+							currentEpoch={props.currentEpoch}
+							onShowAnswerChecked={props.onShowAnswerChecked}
+						/>
+					</Navbar.Text>
 				</> : null
 		}
 		{
-			props.editable ? <>
-				<div style={{ width: '30px' }} />
-				<Navbar.Text>{props.stateToShow}</Navbar.Text>
-			</> : null
+			props.editable == 0 ?
+				<>
+					<Button variant="secondary"
+						onClick={props.createReport}>
+						產生報告
+					</Button>
+				</> : null
 		}
 		<Navbar.Collapse className="justify-content-end">
 			<Navbar.Text>
