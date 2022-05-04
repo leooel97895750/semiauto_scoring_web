@@ -302,21 +302,21 @@ class EventInfoWindow extends Component {
 
 		 	let spo2Amp = 0;
 		 	if(isLeftIn && isRightIn){
-		 		try {spo2Amp = (this.props.data[5].data(Math.round(startPoint)) - this.props.data[5].data(Math.round(endPoint))).toFixed(1);}
+		 		try {spo2Amp = -(this.props.data[5].data(Math.round(startPoint)) - this.props.data[5].data(Math.round(endPoint))).toFixed(1);}
 		 		catch(error) {console.log(error);}
 		 	}
 		 	// 左界超出
 			else if(isLeftIn === 0 && isRightIn === 1){
-		 		try {spo2Amp = (this.props.preData[0][5].data(Math.round(startPoint + this.props.data[5].dataLength-1)) - this.props.data[5].data(Math.round(endPoint))).toFixed(1);}
+		 		try {spo2Amp = -(this.props.preData[0][5].data(Math.round(startPoint + this.props.data[5].dataLength-1)) - this.props.data[5].data(Math.round(endPoint))).toFixed(1);}
 		 		catch(error) {console.log(error);}
 		 	}
 		 	// 右界超出
 		 	else if(isLeftIn === 1 && isRightIn === 0){
-		 		try {spo2Amp = (this.props.data[5].data(Math.round(startPoint)) - this.props.nextData[0][5].data(Math.round(endPoint - this.props.data[5].dataLength+1))).toFixed(1);}
+		 		try {spo2Amp = -(this.props.data[5].data(Math.round(startPoint)) - this.props.nextData[0][5].data(Math.round(endPoint - this.props.data[5].dataLength+1))).toFixed(1);}
 		 		catch(error) {console.log(error);}
 		 	}
 			else if(isLeftIn === 0 && isRightIn === 0){
-				try {spo2Amp = (this.props.preData[0][5].data(Math.round(startPoint + this.props.data[5].dataLength-1)) - this.props.nextData[0][5].data(Math.round(endPoint - this.props.data[5].dataLength+1))).toFixed(1);}
+				try {spo2Amp = -(this.props.preData[0][5].data(Math.round(startPoint + this.props.data[5].dataLength-1)) - this.props.nextData[0][5].data(Math.round(endPoint - this.props.data[5].dataLength+1))).toFixed(1);}
 		 		catch(error) {console.log(error);}
 			}
 
