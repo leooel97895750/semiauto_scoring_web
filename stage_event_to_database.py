@@ -7,6 +7,7 @@ Created on Wed Apr 27 13:38:15 2022
 # pip install mysql-connector-python
 import mysql.connector
 import json
+import math
 
 
 # 設定要連線的server位置
@@ -70,7 +71,7 @@ timefrom = 0
 timeto = 0
 start = 0
 for i in range(len(apnea)):
-    if answer_stage[floor(i/30)] != '0':
+    if answer_stage[math.floor(i/30)] != '0':
         if apnea[i] == '1' and start == 0:
             print('start')
             timefrom = i
@@ -89,7 +90,7 @@ for i in range(len(apnea)):
 
 start = 0
 for i in range(len(hypopnea)):
-    if answer_stage[floor(i/30)] != '0':
+    if answer_stage[math.floor(i/30)] != '0':
         if hypopnea[i] == '1' and start == 0:
             timefrom = i
             start = 1
@@ -107,7 +108,7 @@ for i in range(len(hypopnea)):
         
 start = 0
 for i in range(len(spo2_artifact)):
-    if answer_stage[floor(i/30)] != '0':
+    if answer_stage[math.floor(i/30)] != '0':
         if spo2_artifact[i] == '1' and start == 0:
             timefrom = i
             start = 1
@@ -125,7 +126,7 @@ for i in range(len(spo2_artifact)):
     
 start = 0
 for i in range(len(spo2)):
-    if answer_stage[floor(i/30)] != '0':
+    if answer_stage[math.floor(i/30)] != '0':
         if spo2[i] == '1' and start == 0:
             timefrom = i
             start = 1
@@ -143,7 +144,7 @@ for i in range(len(spo2)):
         
 start = 0
 for i in range(len(arousal)):
-    if answer_stage[floor(i/30)] != '0':
+    if answer_stage[math.floor(i/30)] != '0':
         if arousal[i] == '1' and start == 0:
             timefrom = i
             start = 1
