@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import AccountDropdown from '../../commonComponents/AccountDropdown'
 import AutoScoringDropdown from '../../commonComponents/AutoScoringDropdown'
+import ReportDropdown from '../../commonComponents/ReportDropdown'
 
 function ScoringNavbar(props) {
 	return <Navbar bg="dark" variant="dark">
@@ -44,9 +45,9 @@ function ScoringNavbar(props) {
 						}} /> */}
 					<Navbar.Text>
 						<AutoScoringDropdown 
-							psgFileId={props.psgFileId} 
-							currentEpoch={props.currentEpoch}
-							onShowAnswerChecked={props.onShowAnswerChecked}
+							psgFileId = {props.psgFileId} 
+							currentEpoch = {props.currentEpoch}
+							onShowAnswerChecked = {props.onShowAnswerChecked}
 						/>
 					</Navbar.Text>
 				</> : null
@@ -54,10 +55,14 @@ function ScoringNavbar(props) {
 		{
 			props.editable == 0 ?
 				<>
-					<Button variant="secondary"
-						onClick={props.createReport}>
-						產生報告
-					</Button>
+					<div style={{ width: '30px' }} />
+					<Navbar.Text>
+						<ReportDropdown 
+							stage = {props.stage}
+							psgFileId = {props.psgFileId}
+							account = {props.account}
+						/>
+					</Navbar.Text>
 				</> : null
 		}
 		<Navbar.Collapse className="justify-content-end">

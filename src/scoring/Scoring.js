@@ -329,6 +329,7 @@ class Scoring extends Component {
 							window.location.href="#"
 						}}
 						onShowAnswerChecked={this.onShowAnswerChecked}
+						stage={this.state.stages}
 						enableShowAnswerCheckbox={this.state.enableShowAnswerCheckbox}
 						hasAnswer={this.state.hasAnswer}
 						buttonDisabled={(this.state.hasNotCompleted) || (this.state.hasSubmitted)}
